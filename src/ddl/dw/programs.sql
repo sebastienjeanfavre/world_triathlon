@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS dw.programs (
+    event_id NUMBER,
+    prog_id	NUMBER,
+    prog_name VARCHAR(64),
+    prog_gender	VARCHAR(64),
+    prog_max_age NUMBER,
+    prog_min_age NUMBER,
+    prog_notes VARCHAR,
+    prog_date_utc DATE,
+    prog_time_utc VARCHAR(64),
+    prog_timezone_offset VARCHAR(64),
+    prog_distance_category VARCHAR(64),
+    prog_distances VARIANT,
+    is_race	BOOLEAN,
+    is_results BOOLEAN,
+    is_live_timing_enabled BOOLEAN,
+    is_team	BOOLEAN,
+    load_ts	TIMESTAMP_NTZ,
+    CONSTRAINT prog_pk PRIMARY KEY (prog_id)
+)

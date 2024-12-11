@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS dw.results (
+    prog_id NUMBER,
+    event_id NUMBER,
+    athlete_id NUMBER,
+    prog_date DATE,
+    finish_position VARCHAR(64),
+    total_time VARCHAR(64),
+    prog_distance_category VARCHAR(64),
+    prog_distances VARIANT,
+    prog_notes VARCHAR,
+    seg1 VARCHAR(64),
+    seg2 VARCHAR(64),
+    seg3 VARCHAR(64),
+    seg4 VARCHAR(64),
+    seg5 VARCHAR(64),
+    split1 VARCHAR(64),
+    split2 VARCHAR(64),
+    split3 VARCHAR(64),
+    split4 VARCHAR(64),
+    split5 VARCHAR(64),
+    CONSTRAINT result_pk PRIMARY KEY (prog_id, athlete_id)
+)

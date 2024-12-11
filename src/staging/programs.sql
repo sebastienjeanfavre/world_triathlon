@@ -26,7 +26,7 @@ SELECT
     PARSE_JSON(json):team::BOOLEAN AS is_team,
     PARSE_JSON(json):_metadata:timestamp::TIMESTAMP_NTZ AS load_ts,
 FROM ids
-CROSS JOIN TABLE(get_json_seq_pages('https://api.triathlon.org/v1/events/' || ids.event_id || '/programs?is_race=true&per_page=100', 
+CROSS JOIN TABLE(get_json_all_pages('https://api.triathlon.org/v1/events/' || ids.event_id || '/programs?is_race=true&per_page=100', 
                                     '0201b661afadf43392e4c7dcaed533fe '))
 WHERE PARSE_JSON(json):_metadata.status_code = 200
 ;

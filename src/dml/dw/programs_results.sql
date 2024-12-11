@@ -22,7 +22,6 @@ FROM world_triathlon.staging.programs_results pr
 JOIN world_triathlon.staging.programs p ON p.prog_id = pr.prog_id,
 TABLE(FLATTEN(input => pr.results)) f
 
-
 -- Tests --
 -- uniqueness of (prog_id, athlete_id)
 -- ARRAY_SIZE(headers) = 5

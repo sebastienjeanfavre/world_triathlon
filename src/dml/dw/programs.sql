@@ -16,7 +16,7 @@ SELECT
     is_live_timing_enabled,
     is_team,
     load_ts
-FROM staging.programs
+FROM world_triathlon.staging.programs
 
 -- Test --
 -- uniqueness of prog_id

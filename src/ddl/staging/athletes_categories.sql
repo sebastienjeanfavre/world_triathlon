@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE staging.athletes_categories AS
+CREATE TABLE IF NOT EXISTS staging.athletes_categories AS
 SELECT
     PARSE_JSON(json):cat_id::NUMBER(16,0) AS cat_id,
     PARSE_JSON(json):cat_name::VARCHAR AS cat_name,

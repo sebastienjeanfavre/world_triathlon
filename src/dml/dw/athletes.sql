@@ -11,7 +11,7 @@ SELECT
     athlete_noc,
     updated_at,
     load_ts
-FROM staging.athletes
+FROM world_triathlon.staging.athletes
 
 -- Tests --
 -- uniqueness of athlete_id

@@ -10,8 +10,7 @@ SELECT
     specifications,
     triathlonlive,
     load_ts,
-FROM staging.events
-;
+FROM world_triathlon.staging.events
 
 -- Test --
 -- uniqueness of event_id

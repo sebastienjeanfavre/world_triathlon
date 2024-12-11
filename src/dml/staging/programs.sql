@@ -1,6 +1,3 @@
--- url = "https://api.triathlon.org/v1/events/event_id/programs?is_race=true"
--- only is_race = True
-
 WITH ids AS (
     SELECT DISTINCT --TOP 10
         event_id
@@ -29,9 +26,6 @@ FROM ids
 CROSS JOIN TABLE(get_json_all_pages('https://api.triathlon.org/v1/events/' || ids.event_id || '/programs?is_race=true&per_page=100', 
                                     '0201b661afadf43392e4c7dcaed533fe '))
 WHERE PARSE_JSON(json):_metadata.status_code = 200
-;
 
-CREATE OR REPLACE TABLE staging.programs AS (
-SELECT * FROM TABLE(RESULT_SCAN(LAST_QUERY_ID()))
-);
-
+-- url = "https://api.triathlon.org/v1/events/event_id/programs?is_race=true"
+-- only is_race = True

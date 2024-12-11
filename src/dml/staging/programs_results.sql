@@ -1,10 +1,8 @@
--- url = "https://api.triathlon.org/v1/events/110659/programs/308511/results"
-
 WITH ids AS (
-    SELECT DISTINCT -- TOP 10
+    SELECT DISTINCT
         event_id,
         prog_id
-    FROM programs
+    FROM world_triathlon.staging.programs
     WHERE is_results=True
     --AND YEAR(prog_date_utc) > 2015
     AND (
@@ -24,11 +22,6 @@ FROM ids
 CROSS JOIN TABLE(get_json('https://api.triathlon.org/v1/events/'|| ids.event_id ||'/programs/' || ids.prog_id || '/results', 
                           '0201b661afadf43392e4c7dcaed533fe '))
 WHERE PARSE_JSON(json):_metadata.status_code = 200
-; -- 15min
 
-CREATE OR REPLACE TABLE staging.programs_results AS (
-SELECT * FROM TABLE(RESULT_SCAN(LAST_QUERY_ID()))
-);
-
-select * from programs_results;
-
+-- url = "https://api.triathlon.org/v1/events/110659/programs/308511/results"
+-- 15min

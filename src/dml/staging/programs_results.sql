@@ -3,7 +3,7 @@ WITH ids AS (
         event_id,
         prog_id
     FROM world_triathlon.staging.programs
-    WHERE is_results=True
+    WHERE is_results = true
     --AND YEAR(prog_date_utc) > 2015
     AND (
         prog_name = 'Elite Women'
@@ -14,7 +14,7 @@ SELECT
     ids.event_id,
     ids.prog_id,
     PARSE_JSON(json):data.headers::VARIANT AS headers,
-    PARSE_JSON(json):data.headers_count::NUMBER(16,0) AS headers_count,
+    PARSE_JSON(json):data.headers_count::NUMBER AS headers_count,
     PARSE_JSON(json):data.meta::VARIANT AS meta,
     PARSE_JSON(json):data.results::VARIANT AS results,
     PARSE_JSON(json):_metadata:timestamp::TIMESTAMP_NTZ AS load_ts,

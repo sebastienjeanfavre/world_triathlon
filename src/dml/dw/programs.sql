@@ -1,6 +1,6 @@
 SELECT
-    event_id,
     prog_id,
+    event_id,
     prog_name,
     prog_gender,
     prog_max_age,

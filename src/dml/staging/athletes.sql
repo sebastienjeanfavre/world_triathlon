@@ -1,6 +1,7 @@
 SET last_page = (
     SELECT PARSE_JSON(json):last_page::NUMBER AS last_page
-    FROM TABLE(get_json('https://api.triathlon.org/v1/athletes?category_id=42&per_page=1000', '0201b661afadf43392e4c7dcaed533fe '))
+    FROM TABLE(staging.get_json('https://api.triathlon.org/v1/athletes?category_id=42&per_page=1000', 
+                                '0201b661afadf43392e4c7dcaed533fe '))
 );
 
 WITH pages AS (
@@ -29,8 +30,8 @@ SELECT
     f.value:validated::VARCHAR(256) AS validated,
     PARSE_JSON(t.json):_metadata:timestamp::TIMESTAMP_NTZ AS load_ts
 FROM pages
-CROSS JOIN TABLE(get_json('https://api.triathlon.org/v1/athletes?category_id=42&per_page=1000&page=' || page_nb, 
-                            '0201b661afadf43392e4c7dcaed533fe ')) t,
+CROSS JOIN TABLE(staging.get_json('https://api.triathlon.org/v1/athletes?category_id=42&per_page=1000&page=' || page_nb, 
+                                    '0201b661afadf43392e4c7dcaed533fe ')) t,
 LATERAL FLATTEN(input => PARSE_JSON(t.json):data) f
 WHERE PARSE_JSON(t.json):_metadata.status_code = 200
 

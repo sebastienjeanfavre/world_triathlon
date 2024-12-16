@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dw.fct_results (
+CREATE TABLE IF NOT EXISTS datamart.fct_results (
     prog_id NUMBER,
     event_id NUMBER,
     athlete_id NUMBER,

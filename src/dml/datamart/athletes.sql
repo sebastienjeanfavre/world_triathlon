@@ -1,3 +1,4 @@
+INSERT OVERWRITE INTO datamart.dim_athlete
 SELECT 
     athlete_id,
     athlete_first,
@@ -11,7 +12,7 @@ SELECT
     athlete_noc,
     updated_at,
     load_ts
-FROM world_triathlon.staging.athletes
+FROM staging.athletes
 
 -- Tests --
 -- uniqueness of athlete_id

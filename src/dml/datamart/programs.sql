@@ -1,3 +1,4 @@
+INSERT OVERWRITE INTO datamart.dim_program
 SELECT
     prog_id,
     event_id,
@@ -16,7 +17,7 @@ SELECT
     is_live_timing_enabled,
     is_team,
     load_ts
-FROM world_triathlon.staging.programs
+FROM staging.programs
 
 -- Test --
 -- uniqueness of prog_id

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dw.dim_athlete (
+CREATE TABLE IF NOT EXISTS datamart.dim_athlete (
     athlete_id NUMBER ,
     athlete_first VARCHAR(256),
     athlete_last VARCHAR(256),
@@ -10,6 +10,6 @@ CREATE TABLE IF NOT EXISTS dw.dim_athlete (
     athlete_edit_date DATE,
     athlete_noc VARCHAR(256),
     updated_at DATE,
-    load_ts TIMESTAMP_NTZ
+    load_ts TIMESTAMP_NTZ,
     CONSTRAINT athlete_pk PRIMARY KEY (athlete_id)
 )

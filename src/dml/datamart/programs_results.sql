@@ -1,3 +1,4 @@
+INSERT OVERWRITE INTO datamart.fct_results
 SELECT 
     p.prog_id,
     p.event_id,
@@ -18,8 +19,8 @@ SELECT
     f.value:splits[2]::VARCHAR(256) AS split3,
     f.value:splits[3]::VARCHAR(256) AS split4,
     f.value:splits[4]::VARCHAR(256) AS split5,    
-FROM world_triathlon.staging.programs_results pr
-JOIN world_triathlon.staging.programs p ON p.prog_id = pr.prog_id,
+FROM staging.programs_results pr
+JOIN staging.programs p ON p.prog_id = pr.prog_id,
 TABLE(FLATTEN(input => pr.results)) f
 
 -- Tests --

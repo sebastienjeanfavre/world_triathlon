@@ -1,3 +1,4 @@
+INSERT OVERWRITE INTO datamart.dim_event
 SELECT 
     event_id,
     event_title,
@@ -10,7 +11,7 @@ SELECT
     specifications,
     triathlonlive,
     load_ts,
-FROM world_triathlon.staging.events
+FROM staging.events
 
 -- Test --
 -- uniqueness of event_id

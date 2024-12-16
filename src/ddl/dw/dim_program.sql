@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dw.programs (
+CREATE TABLE IF NOT EXISTS dw.dim_program (
     prog_id	NUMBER,
     event_id NUMBER,
     prog_name VARCHAR(256),

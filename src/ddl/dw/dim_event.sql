@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dw.events (
+CREATE TABLE IF NOT EXISTS dw.dim_event (
     event_id NUMBER ,
     event_title VARCHAR(256),
     event_date DATE,

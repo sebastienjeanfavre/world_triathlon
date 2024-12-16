@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS dw.athletes (
+CREATE TABLE IF NOT EXISTS dw.dim_athlete (
     athlete_id NUMBER ,
     athlete_first VARCHAR(256),
     athlete_last VARCHAR(256),

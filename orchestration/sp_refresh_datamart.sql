@@ -16,6 +16,3 @@ BEGIN
     RETURN 'Successful refresh :D';
 END;
 $$;
-
-
-CALL staging.sp_refresh_datamart();

@@ -1,11 +1,11 @@
-SET events_start_date = '2024-10-01';
+SET refresh_start_date = (SELECT ADD_MONTHS(CURRENT_DATE(), -1));
 
 CREATE OR REPLACE TEMP TABLE staging.incoming_programs AS
 WITH ids AS (
     SELECT DISTINCT --TOP 10
         event_id
     FROM staging.events
-    WHERE event_date >= $events_start_date
+    WHERE event_date >= $refresh_start_date
 )
 SELECT
     ids.event_id,

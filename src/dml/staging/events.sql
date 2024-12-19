@@ -5,6 +5,7 @@ SET last_page = (
 )
 ;
 
+INSERT OVERWRITE INTO staging.events
 WITH pages AS (
     SELECT 
         ROW_NUMBER() OVER (ORDER BY SEQ4()) AS page_nb

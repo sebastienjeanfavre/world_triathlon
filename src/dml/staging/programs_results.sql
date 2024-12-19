@@ -1,4 +1,4 @@
-SET refresh_start_date = (SELECT ADD_MONTHS(CURRENT_DATE(), -1));
+SET refresh_start_date = (SELECT ADD_MONTHS(MAX(load_ts), -1) FROM staging.programs_results);
 
 CREATE OR REPLACE TEMP TABLE staging.incoming_programs_results AS
 WITH ids AS (

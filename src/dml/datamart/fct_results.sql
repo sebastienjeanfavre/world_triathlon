@@ -12,7 +12,7 @@ SELECT
     p.prog_distance_category,
     p.prog_distances,
     p.prog_notes,
-    pr.headers[0] AS headers,
+    pr.headers AS headers,
     SECOND(TRY_TO_TIME(f.value:splits[0]::VARCHAR)) + MINUTE(TRY_TO_TIME(f.value:splits[0]::VARCHAR))*60 + HOUR(TRY_TO_TIME(f.value:splits[0]::VARCHAR))*3600 AS split1_time_s,
     SECOND(TRY_TO_TIME(f.value:splits[1]::VARCHAR)) + MINUTE(TRY_TO_TIME(f.value:splits[1]::VARCHAR))*60 + HOUR(TRY_TO_TIME(f.value:splits[1]::VARCHAR))*3600 AS split2_time_s,
     SECOND(TRY_TO_TIME(f.value:splits[2]::VARCHAR)) + MINUTE(TRY_TO_TIME(f.value:splits[2]::VARCHAR))*60 + HOUR(TRY_TO_TIME(f.value:splits[2]::VARCHAR))*3600 AS split3_time_s,

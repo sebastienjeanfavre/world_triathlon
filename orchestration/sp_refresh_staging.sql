@@ -9,11 +9,11 @@ BEGIN
     -- Refresh events, programs and results (not athletes)
     ALTER GIT REPOSITORY public.git_repo_stage_world_triathlon FETCH;
     -- All events are loaded everytime
-    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/develop/src/dml/staging/events.sql;
+    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/events.sql;
     -- Programs are refreshed if event_date >= addmonth(current_date - 1)
-    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/develop/src/dml/staging/programs.sql;
+    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs.sql;
     -- Programs are refreshed if event_date >= addmonth(current_date - 1)
-    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/develop/src/dml/staging/programs_results.sql;
+    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs_results.sql;
     
     RETURN 'Successful refresh :D';
 END;

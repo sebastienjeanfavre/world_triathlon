@@ -1,4 +1,4 @@
-SET start_date = '2024-09-01';
+SET refresh_start_date = (SELECT ADD_MONTHS(CURRENT_DATE(), -1));
 
 CREATE OR REPLACE TEMP TABLE staging.incoming_programs_results AS
 WITH ids AS (
@@ -7,7 +7,7 @@ WITH ids AS (
         prog_id
     FROM world_triathlon.staging.programs
     WHERE is_results = true
-    AND prog_date_utc > $start_date
+    AND prog_date_utc > $refresh_start_date
     AND (
         prog_name = 'Elite Women'
         OR prog_name = 'Elite Men'

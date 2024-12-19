@@ -14,8 +14,3 @@ CREATE OR REPLACE GIT REPOSITORY git_repo_stage_world_triathlon
 ls @git_repo_stage_world_triathlon/branches/main/;
 
 alter git repository git_repo_stage_world_triathlon fetch;
-
-execute immediate from @git_repo_stage_world_triathlon/branches/main/src/create-database.sql;
-
-
-execute immediate from  @git_repo_stage_world_triathlon/branches/main/src/dml/datamart/dim_event.sql;

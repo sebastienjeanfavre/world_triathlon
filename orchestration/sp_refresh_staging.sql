@@ -1,11 +1,19 @@
-CREATE OR REPLACE PROCEDURE sp_refresh_staging()
-RETURNS TABLE (table_name STRING, rows_inserted INTEGER)
+CREATE OR REPLACE PROCEDURE staging.sp_refresh_staging()
+RETURNS STRING
 LANGUAGE SQL
+EXECUTE AS CALLER
 AS
 $$
-DECLARE
-  rows_inserted INTEGER;
 BEGIN
-    EXECUTE IMMEDIATE FROM  @git_repo_stage_world_triathlon/branches/main/src/dml/staging/dim_event.sql;
+    -- Refresh events, programs and results (not athletes)
+    ALTER GIT REPOSITORY public.git_repo_stage_world_triathlon FETCH;
+    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/events.sql;
+    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs.sql;
+    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs_results.sql;
+    
+    RETURN 'Successful refresh :D';
 END;
 $$;
+
+
+CALL staging.sp_refresh_staging();

@@ -1,4 +1,4 @@
-CREATE OR REPLACE TABLE staging.ranking_details AS 
+-- INSERT OVERWRITE INTO staging.ranking_details
 SELECT 
     r.ranking_id,
     f.value:athlete_id::NUMBER AS athlete_id,

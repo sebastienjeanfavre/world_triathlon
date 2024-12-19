@@ -4,6 +4,7 @@ SET last_page = (
                                 '0201b661afadf43392e4c7dcaed533fe '))
 );
 
+-- INSERT OVERWRITE INTO staging.athletes 
 WITH pages AS (
     SELECT 
         ROW_NUMBER() OVER (ORDER BY SEQ4()) AS page_nb

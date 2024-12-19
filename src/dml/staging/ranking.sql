@@ -1,4 +1,4 @@
--- CREATE OR REPLACE TABLE staging.ranking AS 
+-- INSERT OVERWRITE INTO staging.ranking
 SELECT 
     PARSE_JSON(t.json):ranking_id::NUMBER AS ranking_id,
     PARSE_JSON(t.json):ranking_name::VARCHAR(256) AS ranking_name,

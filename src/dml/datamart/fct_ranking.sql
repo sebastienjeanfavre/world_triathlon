@@ -1,6 +1,6 @@
 -- SELECT GET_DDL('table', 'datamart.fct_ranking');
 -- CREATE OR REPLACE TABLE datamart.fct_ranking AS
--- INSERT OVERWRITE INTO datamart.fct_results
+INSERT OVERWRITE INTO datamart.fct_results
 SELECT 
     r.ranking_id,
     rd.athlete_id,

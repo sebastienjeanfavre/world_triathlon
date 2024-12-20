@@ -35,6 +35,12 @@ SELECT
 FROM staging.programs_results pr
 JOIN staging.programs p ON p.prog_id = pr.prog_id,
 TABLE(FLATTEN(input => pr.results)) f
+WHERE headers[0]:name = 'Swim'
+AND split1_time_s > 0
+AND split2_time_s > 0
+AND split3_time_s > 0
+AND split4_time_s > 0
+AND split5_time_s > 0
 
 -- Tests --
 -- uniqueness of (prog_id, athlete_id)

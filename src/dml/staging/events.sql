@@ -1,7 +1,7 @@
 SET last_page = (
     SELECT 
         PARSE_JSON(json):last_page::NUMBER AS last_page,
-    FROM TABLE(staging.get_json('https://api.triathlon.org/v1/events?per_page=100&category_id=340%7C341%7C351%7C624%7C348%7C349&specification_id=376%7C377&order=asc&page=1', '0201b661afadf43392e4c7dcaed533fe '))
+    FROM TABLE(staging.get_json('https://api.triathlon.org/v1/events?per_page=100&category_id=340%7C341%7C351%7C624%7C348%7C349&specification_id=376%7C377%7C357&order=asc&page=1', '0201b661afadf43392e4c7dcaed533fe '))
 )
 ;
 
@@ -25,7 +25,7 @@ SELECT
     PARSE_JSON(t.json):_metadata:timestamp::TIMESTAMP_NTZ AS load_ts
 FROM pages
 CROSS JOIN TABLE(world_triathlon.staging.get_json(
-    'https://api.triathlon.org/v1/events?per_page=100&category_id=340%7C341%7C351%7C624%7C348%7C349&specification_id=376%7C377&order=asc&page=' || page_nb, 
+    'https://api.triathlon.org/v1/events?per_page=100&category_id=340%7C341%7C351%7C624%7C348%7C349&specification_id=376%7C377%7C357&order=asc&page=' || page_nb, 
     '0201b661afadf43392e4c7dcaed533fe ')) t,
 LATERAL FLATTEN(input => PARSE_JSON(t.json):data) f
 WHERE PARSE_JSON(t.json):_metadata.status_code = 200

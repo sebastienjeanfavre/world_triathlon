@@ -13,8 +13,8 @@ SELECT
 FROM datamart.fct_results fct
 INNER JOIN world_triathlon.datamart.dim_event e ON e.event_id = fct.event_id
 INNER JOIN next_season_races n_e ON n_e.race_place = SPLIT_PART(e.event_title, ' ', -1)
-WHERE fct.split1_rank > 25
-    AND e.event_region_name = 'Europe'
+WHERE fct.split1_rank > 20
+    -- AND e.event_region_name = 'Europe'
     AND headers[0]:name = 'Swim'
     AND fct.split12345_time_s BETWEEN fct.total_time_s - 60 AND fct.total_time_s + 60 -- total_time = sum(splits) +- 1 minute
 GROUP BY SPLIT_PART(e.event_title, ' ', -1)--, race_level

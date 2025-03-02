@@ -31,7 +31,8 @@ SELECT
     ROW_NUMBER() OVER (PARTITION BY p.prog_id ORDER BY split123_time_s) AS split123_rank,
     ROW_NUMBER() OVER (PARTITION BY p.prog_id ORDER BY split1234_time_s) AS split1234_rank,
     ROW_NUMBER() OVER (PARTITION BY p.prog_id ORDER BY split12345_time_s) AS split12345_rank,
-    COUNT(athlete_id) OVER (PARTITION BY pr.prog_id) AS nb_finishers
+    COUNT(athlete_id) OVER (PARTITION BY pr.prog_id) AS nb_finishers,
+    pr.load_ts
 FROM staging.programs_results pr
 JOIN staging.programs p ON p.prog_id = pr.prog_id,
 TABLE(FLATTEN(input => pr.results)) f

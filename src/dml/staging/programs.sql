@@ -8,7 +8,7 @@ WITH ids AS (
     WHERE event_date >= $refresh_start_date
 )
 SELECT
-    ids.event_id,.
+    ids.event_id,
     PARSE_JSON(json):prog_id::NUMBER AS prog_id,
     PARSE_JSON(json):prog_name::VARCHAR(256) AS prog_name,
     PARSE_JSON(json):prog_gender::VARCHAR(256) AS prog_gender,
@@ -25,7 +25,7 @@ SELECT
     PARSE_JSON(json):results::BOOLEAN AS is_results,
     PARSE_JSON(json):live_timing_enabled::BOOLEAN AS is_live_timing_enabled,
     PARSE_JSON(json):team::BOOLEAN AS is_team,
-    PARSE_JSON(json):_metadata:timestamp::TIMESTAMP_NTZ AS load_ts,
+    PARSE_JSON(json):_metadata:timestamp::TIMESTAMP_NTZ AS load_ts
 FROM ids
 CROSS JOIN TABLE(staging.get_json_all_pages('https://api.triathlon.org/v1/events/' || ids.event_id || '/programs?is_race=true&per_page=100', 
                                     '0201b661afadf43392e4c7dcaed533fe '))

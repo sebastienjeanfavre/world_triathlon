@@ -15,7 +15,7 @@ SELECT
     is_race,
     is_results,
     is_live_timing_enabled,
-    is_team,.
+    is_team,
     load_ts
 FROM staging.programs
 

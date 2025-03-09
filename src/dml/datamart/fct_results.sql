@@ -1,10 +1,9 @@
--- SELECT GET_DDL('table', 'datamart.fct_results');
--- CREATE OR REPLACE TABLE datamart.fct_results AS
 INSERT OVERWRITE INTO datamart.fct_results
-SELECT 
+SELECT
     p.prog_id,
     p.event_id,
     f.value:athlete_id::NUMBER AS athlete_id,
+    f.value:athlete_full_name::VARCHAR(256) AS athlete_full_name,
     p.prog_date_utc AS prog_date,
     TRY_TO_NUMBER(f.value:position::VARCHAR(256)) AS finish_position,
     IFF(finish_position IS NULL, f.value:position, NULL)::VARCHAR(256) AS flag_no_finish,
@@ -37,12 +36,14 @@ FROM staging.programs_results pr
 JOIN staging.programs p ON p.prog_id = pr.prog_id,
 TABLE(FLATTEN(input => pr.results)) f
 WHERE headers[0]:name = 'Swim'
+AND headers[2]:name = 'Bike'
+AND headers[4]:name = 'Run'
 AND split1_time_s > 0
 AND split2_time_s > 0
 AND split3_time_s > 0
 AND split4_time_s > 0
 AND split5_time_s > 0
-
+; 
 -- Tests --
 -- uniqueness of (prog_id, athlete_id)
 -- ARRAY_SIZE(headers) = 5

@@ -1,5 +1,6 @@
 SELECT 
     athlete_fullname,
+    a.athlete_id,
     -- ROW_NUMBER() OVER (PARTITION BY a.athlete_id ORDER BY prog_date),
     prog_date,
     finish_position,

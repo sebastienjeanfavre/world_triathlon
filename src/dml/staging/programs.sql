@@ -8,7 +8,7 @@ WITH ids AS (
     WHERE event_date >= $refresh_start_date
 )
 SELECT
-    ids.event_id,
+    ids.event_id,.
     PARSE_JSON(json):prog_id::NUMBER AS prog_id,
     PARSE_JSON(json):prog_name::VARCHAR(256) AS prog_name,
     PARSE_JSON(json):prog_gender::VARCHAR(256) AS prog_gender,

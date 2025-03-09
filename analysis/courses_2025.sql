@@ -3,7 +3,9 @@ select table_name, last_altered
 from information_schema.tables
 where table_type LIKE '%TABLE%';
 
-select max(load_ts) from staging.events;
+SELECT *
+FROM datamart.fct_results
+ORDER BY prog_date DESC NULLS LAST;
 
 SELECT * 
 FROM datamart.dim_event e

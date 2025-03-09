@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE call staging.sp_refresh_datamart()
+CREATE OR REPLACE PROCEDURE staging.sp_refresh_datamart()
 RETURNS STRING
 LANGUAGE SQL
 EXECUTE AS CALLER

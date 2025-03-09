@@ -32,25 +32,6 @@ CROSS JOIN TABLE(world_triathlon.staging.get_json(
 LATERAL FLATTEN(input => PARSE_JSON(t.json):data) f
 WHERE PARSE_JSON(t.json):_metadata.status_code = 200
 
--- select * from staging.event_categories;
--- 340 -- Continental Championships
--- 341 -- Continental Cup
--- 342 -- Continental Junior Cup
--- 343 -- Major games
--- 624 -- World Championship Finals
--- 351 -- World Championship Series
--- 352 -- Qualification events
--- 348 -- World Championships
--- 349 -- World Cup
-
--- 345?
--- 346?
-
--- 340|341|351|624|348|349
-
--- select distinct specifications[0]:cat_id from staging.events;
--- 376|377 -- Sprint|OD
-
 -- specification: 357 -- Triathlon
 --  ; select * from staging.event_categories;
 --  ; select * from staging.event_specifications;

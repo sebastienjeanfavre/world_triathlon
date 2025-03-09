@@ -1,8 +1,8 @@
-SET refresh_start_date = (SELECT ADD_MONTHS(MAX(load_ts), -1) FROM staging.programs);
+SET refresh_start_date = (SELECT ADD_MONTHS(MAX(load_ts), -3) FROM staging.programs);
 
 CREATE OR REPLACE TEMP TABLE staging.incoming_programs AS
 WITH ids AS (
-    SELECT DISTINCT --TOP 10
+    SELECT DISTINCT
         event_id
     FROM staging.events
     WHERE event_date >= $refresh_start_date

@@ -7,8 +7,7 @@ SET last_page = (
 )
 ;
 
--- INSERT OVERWRITE INTO staging.events
-CREATE OR REPLACE TABLE staging.events AS
+INSERT OVERWRITE INTO staging.events
 WITH pages AS (
     SELECT 
         ROW_NUMBER() OVER (ORDER BY SEQ4()) AS page_nb
@@ -26,7 +25,8 @@ SELECT
     f.value:event_region_name::VARCHAR(256) AS event_region_name,
     f.value:event_latitude::FLOAT AS event_latitude,
     f.value:event_longitude::FLOAT AS event_longitude,
-    f.value:event_specifications::VARIANT AS specifications,
+    f.value:event_categories::VARIANT AS event_categories,
+    f.value:event_specifications::VARIANT AS event_specifications,
     f.value:triathlonlive::BOOLEAN AS triathlonlive,
     PARSE_JSON(t.json):_metadata:timestamp::TIMESTAMP_NTZ AS load_ts
 FROM pages

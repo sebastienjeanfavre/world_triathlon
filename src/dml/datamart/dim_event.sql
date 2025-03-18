@@ -11,10 +11,10 @@ SELECT
     event_region_name,
     event_latitude,
     event_longitude,
-    event_categories
+    event_categories,
     event_specifications,
     triathlonlive,
-    load_ts,
+    load_ts
 FROM staging.events
 
 -- Test --

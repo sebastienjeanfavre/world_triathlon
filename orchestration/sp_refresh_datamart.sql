@@ -14,7 +14,7 @@ BEGIN
     SYSTEM$LOG('INFO', 'Executing src/dml/datamart/fct_results.sql');
     EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/datamart/fct_results.sql;
     SYSTEM$LOG('INFO', 'Executing src/dml/datamart/fct_ranking.sql');
-    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/develop/src/dml/datamart/fct_ranking.sql;
+    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/datamart/fct_ranking.sql;
     
     RETURN 'Successful refresh';
 

@@ -12,5 +12,4 @@ SELECT
 FROM TABLE(world_triathlon.staging.get_json_all_pages(
     'https://api.triathlon.org/v1/rankings', 
     '0201b661afadf43392e4c7dcaed533fe ')) t
-WHERE PARSE_JSON(t.json):_metadata.status_code = 200;
-
+WHERE PARSE_JSON(t.json):_metadata.status_code = 200

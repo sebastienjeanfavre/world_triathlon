@@ -43,7 +43,7 @@ AND split2_time_s > 0
 AND split3_time_s > 0
 AND split4_time_s > 0
 AND split5_time_s > 0
-; 
+
 -- Tests --
 -- uniqueness of (prog_id, athlete_id)
 -- ARRAY_SIZE(headers) = 5

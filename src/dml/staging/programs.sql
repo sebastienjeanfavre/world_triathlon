@@ -77,4 +77,3 @@ MERGE INTO staging.programs target USING staging.incoming_programs source
             source.IS_TEAM,
             source.LOAD_TS
         )
-;

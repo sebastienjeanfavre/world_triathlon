@@ -19,4 +19,4 @@ SELECT
     rd.updated_at,
     rd.load_ts
 FROM staging.ranking r
-JOIN staging.ranking_details rd ON r.ranking_id = rd.ranking_id,
+JOIN staging.ranking_details rd ON r.ranking_id = rd.ranking_id

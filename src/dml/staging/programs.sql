@@ -5,21 +5,21 @@ WITH ids AS (
     SELECT DISTINCT
         event_id
     FROM staging.events
-    WHERE event_date >= $refresh_start_date
+    --WHERE event_date >= $refresh_start_date
 )
 SELECT
     ids.event_id,
     PARSE_JSON(json):prog_id::NUMBER AS prog_id,
-    PARSE_JSON(json):prog_name::VARCHAR(256) AS prog_name,
-    PARSE_JSON(json):prog_gender::VARCHAR(256) AS prog_gender,
+    PARSE_JSON(json):prog_name::VARCHAR AS prog_name,
+    PARSE_JSON(json):prog_gender::VARCHAR AS prog_gender,
     PARSE_JSON(json):prog_max_age::NUMBER AS prog_max_age,
     PARSE_JSON(json):prog_min_age::NUMBER AS prog_min_age,
     PARSE_JSON(json):prog_notes::VARCHAR AS prog_notes,
     PARSE_JSON(json):prog_date_utc::DATE AS prog_date_utc,
-    PARSE_JSON(json):prog_time_utc::VARCHAR(256) AS prog_time_utc,
-    PARSE_JSON(json):prog_timezone_name::VARCHAR(256) AS prog_timezone_name,
-    PARSE_JSON(json):prog_timezone_offset::VARCHAR(256) AS prog_timezone_offset,
-    PARSE_JSON(json):prog_distance_category::VARCHAR(256) AS prog_distance_category,
+    PARSE_JSON(json):prog_time_utc::VARCHAR AS prog_time_utc,
+    PARSE_JSON(json):prog_timezone_name::VARCHAR AS prog_timezone_name,
+    PARSE_JSON(json):prog_timezone_offset::VARCHAR AS prog_timezone_offset,
+    PARSE_JSON(json):prog_distance_category::VARCHAR AS prog_distance_category,
     PARSE_JSON(json):prog_distances::VARIANT AS prog_distances,
     PARSE_JSON(json):is_race::BOOLEAN AS is_race,
     PARSE_JSON(json):results::BOOLEAN AS is_results,
@@ -77,3 +77,9 @@ MERGE INTO staging.programs target USING staging.incoming_programs source
             source.IS_TEAM,
             source.LOAD_TS
         )
+;
+
+CREATE TEMP TABLE desc table staging.programs_2 AS
+SELECT * EXCLUDE(prog_distance_category),
+    prog_distance_category::VARCHAR AS prog_distance_category
+FROM staging.programs

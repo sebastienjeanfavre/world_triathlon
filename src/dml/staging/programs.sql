@@ -78,8 +78,3 @@ MERGE INTO staging.programs target USING staging.incoming_programs source
             source.LOAD_TS
         )
 ;
-
-CREATE TEMP TABLE desc table staging.programs_2 AS
-SELECT * EXCLUDE(prog_distance_category),
-    prog_distance_category::VARCHAR AS prog_distance_category
-FROM staging.programs

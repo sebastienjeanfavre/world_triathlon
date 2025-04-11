@@ -5,7 +5,7 @@ WITH ids AS (
     SELECT DISTINCT
         event_id
     FROM staging.events
-    --WHERE event_date >= $refresh_start_date
+    WHERE event_date >= $refresh_start_date
 )
 SELECT
     ids.event_id,

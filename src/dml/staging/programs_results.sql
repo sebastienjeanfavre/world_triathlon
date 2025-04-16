@@ -8,11 +8,15 @@ WITH ids AS (
     FROM world_triathlon.staging.programs
     WHERE is_results = true
     AND prog_date_utc > $refresh_start_date
-    AND (
-        prog_name = 'Elite Women'
-        OR prog_name = 'Elite Men'
-        )
+    AND prog_name IN (
+        'Elite Women', 
+        'Elite Men',
+        'Junior Men',
+        'Junior Women',
+        'U23 Men',
+        'U23 Women'
     )
+)
 SELECT
     ids.event_id,
     ids.prog_id,

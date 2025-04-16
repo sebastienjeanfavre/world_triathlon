@@ -7,7 +7,7 @@ CREATE OR REPLACE API INTEGRATION git_api_integration
 desc integration git_api_integration;
 
 -- 2 create git repo obj
-CREATE OR REPLACE GIT REPOSITORY git_repo_stage_world_triathlon
+CREATE OR REPLACE GIT REPOSITORY orchestration.git_repo_stage_world_triathlon
   API_INTEGRATION = git_api_integration
   ORIGIN = 'https://github.com/sebastienjeanfavre/world_triathlon.git';
 

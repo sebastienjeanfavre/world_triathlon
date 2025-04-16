@@ -1,3 +1,4 @@
+-- CREATE OR REPLACE DATABASE WORLD_TRIATHLON_BACKUP CLONE WORLD_TRIATHLON;
 create or replace schema world_triathlon.staging ;
 create or replace table world_triathlon.staging.athletes AS 
 select * from world_triathlon_backup.staging.athletes;

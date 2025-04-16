@@ -17,6 +17,9 @@ BEGIN
     -- Programs are refreshed if event_date >= addmonth(current_date - 1)
     SYSTEM$LOG('INFO', 'Executing src/dml/staging/programs_results.sql');
     EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs_results.sql;
+    -- Get start lists for future events
+    SYSTEM$LOG('INFO', 'Executing src/dml/staging/programs_results.sql');
+    EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs_entries.sql;
     -- Refresh rankings
     SYSTEM$LOG('INFO', 'Executing src/dml/staging/ranking.sql');
     EXECUTE IMMEDIATE FROM @public.git_repo_stage_world_triathlon/branches/main/src/dml/staging/ranking.sql;

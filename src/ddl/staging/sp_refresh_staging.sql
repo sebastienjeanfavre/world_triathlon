@@ -5,7 +5,6 @@ EXECUTE AS CALLER
 AS
 $$
 BEGIN
-    -- Refresh events, programs and results (not athletes)
     SYSTEM$LOG('INFO', 'Fetching remote repo');
     ALTER GIT REPOSITORY orchestration.git_repo_stage_world_triathlon FETCH;
     -- All events are loaded everytime
@@ -27,12 +26,12 @@ BEGIN
     SYSTEM$LOG('INFO', 'Executing src/dml/staging/ranking_details.sql');
     EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/staging/ranking_details.sql;
     
-    RETURN 'Successful refresh';
+    RETURN 'Successful refresh at ' || CURRENT_TIMESTAMP();
 
 EXCEPTION
     WHEN OTHER THEN
         -- Log any errors encountered during execution
-        SYSTEM$LOG('ERROR', 'Error encountered');
-        RETURN 'Error encountered';
+        SYSTEM$LOG('ERROR', 'Error encountered: ' || SQLERRM);
+        RETURN 'Error encountered: ' || SQLERRM;
 END;
 $$;

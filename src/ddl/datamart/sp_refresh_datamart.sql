@@ -16,12 +16,12 @@ BEGIN
     SYSTEM$LOG('INFO', 'Executing src/dml/datamart/fct_ranking.sql');
     EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/datamart/fct_ranking.sql;
     
-    RETURN 'Successful refresh';
+    RETURN 'Successful refresh at ' || CURRENT_TIMESTAMP();
 
 EXCEPTION
     WHEN OTHER THEN
         -- Log any errors encountered during execution
-        SYSTEM$LOG('ERROR', 'Error encountered');
-        RETURN 'Error encountered';
+        SYSTEM$LOG('ERROR', 'Error encountered: ' || SQLERRM);
+        RETURN 'Error encountered: ' || SQLERRM;
 END;
 $$;

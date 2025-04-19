@@ -20,6 +20,21 @@ BEGIN
     EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/datamart/dim_event.sql;
     SYSTEM$LOG('INFO', 'dim_event.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
 
+    -- dim_event_world_cup.sql
+    last_ts := CURRENT_TIMESTAMP();
+    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/datamart/dim_event_world_cup.sql;
+    SYSTEM$LOG('INFO', 'dim_event_world_cup.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
+
+    -- dim_event_continental_cup.sql
+    last_ts := CURRENT_TIMESTAMP();
+    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/datamart/dim_event_continental_cup.sql;
+    SYSTEM$LOG('INFO', 'dim_event_continental_cup.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
+
+    -- dim_event_wtcs.sql
+    last_ts := CURRENT_TIMESTAMP();
+    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/datamart/dim_event_wtcs.sql;
+    SYSTEM$LOG('INFO', 'dim_event_wtcs.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
+
     -- dim_program.sql
     last_ts := CURRENT_TIMESTAMP();
     EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/datamart/dim_program.sql;

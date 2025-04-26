@@ -29,6 +29,8 @@ FROM ids
 CROSS JOIN TABLE(staging.get_json('https://api.triathlon.org/v1/events/'|| ids.event_id ||'/programs/' || ids.prog_id || '/results', 
                           '0201b661afadf43392e4c7dcaed533fe '))
 WHERE PARSE_JSON(json):_metadata.status_code = 200
+AND event_id IS NOT NULL
+AND prog_id IS NOT NULL
 ;
 -- url = "https://api.triathlon.org/v1/events/110659/programs/308511/results"
 -- 15min

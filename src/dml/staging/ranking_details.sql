@@ -29,10 +29,9 @@ AND updated_at IS NOT NULL
 MERGE INTO staging.ranking_details target USING staging.incoming_ranking_details source
     ON target.ranking_id = source.ranking_id 
     AND target.athlete_id = source.athlete_id
-    AND target.updated_at = source.updated_at
+    AND target.rank = source.rank
     WHEN MATCHED     
     AND (
-        target.rank != source.rank OR
         target.total != source.total OR
         target.total_current_period != source.total_current_period OR
         target.events_current_period != source.events_current_period OR
@@ -41,11 +40,11 @@ MERGE INTO staging.ranking_details target USING staging.incoming_ranking_details
         target.last_rank != source.last_rank OR
         target.last_total != source.last_total OR
         target.events_previous_period != source.events_previous_period OR
-        target.scores_previous_period != source.scores_previous_period
+        target.scores_previous_period != source.scores_previous_period OR
+        target.updated_at != source.updated_at
     )
     THEN 
         UPDATE SET 
-            target.rank = source.rank,
             target.total = source.total,
             target.total_current_period = source.total_current_period,
             target.events_current_period = source.events_current_period,
@@ -55,6 +54,7 @@ MERGE INTO staging.ranking_details target USING staging.incoming_ranking_details
             target.last_total = source.last_total,
             target.events_previous_period = source.events_previous_period,
             target.scores_previous_period = source.scores_previous_period,
+            target.updated_at = source.updated_at,
             target.load_ts = source.load_ts
     WHEN NOT MATCHED THEN
         INSERT (

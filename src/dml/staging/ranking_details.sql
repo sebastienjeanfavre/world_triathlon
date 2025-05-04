@@ -1,6 +1,12 @@
 CREATE OR REPLACE TEMP TABLE staging.incoming_ranking_details AS
+WITH ranking_ids AS (
+    SELECT DISTINCT
+        ranking_id
+    FROM staging.ranking
+    WHERE ranking_id IN (11, 12, 13, 14, 15, 16)
+)
 SELECT DISTINCT
-    r.ranking_id,
+    ranking_ids.ranking_id,
     f.value:athlete_id::NUMBER AS athlete_id,
     f.value:rank::NUMBER AS rank,
     f.value:total::NUMBER AS total,
@@ -14,13 +20,12 @@ SELECT DISTINCT
     f.value:scores_previous_period::ARRAY AS scores_previous_period,
     f.value:updated_at::TIMESTAMP_NTZ AS updated_at,
     PARSE_JSON(t.json):_metadata.timestamp::TIMESTAMP_NTZ AS load_ts
-FROM staging.ranking r
+FROM ranking_ids
 CROSS JOIN TABLE(world_triathlon.staging.get_json_all_pages(
-    'https://api.triathlon.org/v1/rankings/'|| r.ranking_id, 
+    'https://api.triathlon.org/v1/rankings/'|| ranking_ids.ranking_id, 
     '0201b661afadf43392e4c7dcaed533fe')) t,
 LATERAL FLATTEN(input => PARSE_JSON(t.json):rankings) f
 WHERE PARSE_JSON(t.json):_metadata.status_code = 200
-AND ranking_id IN (11, 12, 13, 14, 15, 16)
 AND athlete_id IS NOT NULL
 AND ranking_id IS NOT NULL
 AND rank IS NOT NULL

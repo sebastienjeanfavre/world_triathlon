@@ -23,7 +23,7 @@ WHERE PARSE_JSON(t.json):_metadata.status_code = 200
 AND ranking_id IN (11, 12, 13, 14, 15, 16)
 AND athlete_id IS NOT NULL
 AND ranking_id IS NOT NULL
-AND updated_at IS NOT NULL
+AND rank IS NOT NULL
 ;
 
 MERGE INTO staging.ranking_details target USING staging.incoming_ranking_details source

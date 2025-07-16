@@ -6,6 +6,6 @@ ALTER TABLE world_triathlon.staging.ranking_details
     	ON (ranking_id)
 ;
 ALTER TABLE world_triathlon.staging.ranking_details
-	ADD DATA METRIC FUNCTION snowflake.core.duplicate_count
+	ADD DATA METRIC FUNCTION snowflake.core.null_count
     	ON (athlete_id)
 ;

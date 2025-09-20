@@ -1,20 +1,25 @@
-CREATE OR REPLACE TABLE FCT_RANKING (
-	RANKING_ID NUMBER(38,0),
-	ATHLETE_ID NUMBER(38,0),
-	RANKING_NAME VARCHAR(256),
-	RANKING_CAT_ID NUMBER(38,0),
-	RANKING_CAT_NAME VARCHAR(256),
-	REGION_NAME VARCHAR(256),
-	EVENTS_CURRENT_PERIOD NUMBER(38,0),
-	EVENTS_PREVIOUS_PERIOD NUMBER(38,0),
-	LAST_RANK NUMBER(38,0),
-	LAST_TOTAL NUMBER(38,0),
-	RANK NUMBER(38,0),
-	SCORES_CURRENT_PERIOD ARRAY,
-	SCORES_PREVIOUS_PERIOD ARRAY,
-	TOTAL NUMBER(38,0),
-	TOTAL_CURRENT_PERIOD NUMBER(38,0),
-	TOTAL_PREVIOUS_PERIOD NUMBER(38,0),
-	UPDATED_AT TIMESTAMP_NTZ(9),
-	LOAD_TS TIMESTAMP_NTZ(9)
-);
+CREATE OR REPLACE DYNAMIC TABLE datamart.fct_ranking
+TARGET_LAG = '6 hours'
+WAREHOUSE = COMPUTE_WH
+AS
+SELECT
+    r.ranking_id,
+    rd.athlete_id,
+    r.ranking_name,
+    r.ranking_cat_id,
+    r.ranking_cat_name,
+    r.region_name,
+    rd.events_current_period,
+    rd.events_previous_period,
+    rd.last_rank,
+    rd.last_total,
+    rd.rank,
+    rd.scores_current_period,
+    rd.scores_previous_period,
+    rd.total,
+    rd.total_current_period,
+    rd.total_previous_period,
+    rd.updated_at,
+    rd.load_ts
+FROM staging.ranking r
+JOIN staging.ranking_details rd ON r.ranking_id = rd.ranking_id

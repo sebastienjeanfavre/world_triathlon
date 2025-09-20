@@ -39,7 +39,6 @@ world_triathlon/
 │   │   └── staging/       # Staging data processes
 │   └── tests/             # Test scripts and sample data
 ├── analysis/              # Ad-hoc analytical queries
-├── orchestration/         # Data pipeline management
 ├── init/                  # Database initialization
 ├── git/                   # Git integration utilities
 └── logs/                  # Pipeline execution logs
@@ -91,7 +90,7 @@ CALL datamart.sp_refresh_datamart();
 2. **Create Staging Layer**: Execute `src/ddl/staging/`
 3. **Create Datamart Layer**: Execute `src/ddl/datamart/`
 4. **Load Data**: Run DML scripts in `src/dml/`
-5. **Schedule Tasks**: Deploy orchestration tasks
+5. **Schedule Tasks**: Deploy tasks
 
 ## Data Sources
 
@@ -143,7 +142,7 @@ GROUP BY prog_name;
 
 - **Database**: Snowflake Cloud Data Platform
 - **Version Control**: Git with Snowflake Git integration
-- **Orchestration**: Snowflake Tasks and Procedures
+- **Orchestration**: Snowflake Tasks and Dynamic Tables
 - **Analytics**: SQL-based dimensional modeling
 
 ---

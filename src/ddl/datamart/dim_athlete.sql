@@ -1,16 +1,19 @@
-CREATE TABLE IF NOT EXISTS datamart.dim_athlete (
-    athlete_id NUMBER ,
-    athlete_first VARCHAR(256),
-    athlete_last VARCHAR(256),
-    athlete_fullname VARCHAR(256),
-    athlete_gender VARCHAR(256),
-    athlete_yob NUMBER,
-    athlete_country_id NUMBER,
-    athlete_country_name VARCHAR(256),
-    athlete_categories VARIANT,
-    athlete_edit_date DATE,
-    athlete_noc VARCHAR(256),
-    updated_at DATE,
-    load_ts TIMESTAMP_NTZ,
-    CONSTRAINT athlete_pk PRIMARY KEY (athlete_id)
-)
+CREATE OR REPLACE DYNAMIC TABLE datamart.dim_athlete
+TARGET_LAG = '6 hours'
+WAREHOUSE = COMPUTE_WH
+AS
+SELECT
+    athlete_id,
+    athlete_first,
+    athlete_last,
+    athlete_first || ' ' || athlete_last AS athlete_fullname,
+    athlete_gender,
+    athlete_yob,
+    athlete_country_id,
+    athlete_country_name,
+    athlete_categories,
+    athlete_edit_date,
+    athlete_noc,
+    updated_at,
+    load_ts
+FROM staging.athletes

@@ -13,37 +13,37 @@ BEGIN
 
     -- 1) Fetch remote Git repository
     last_ts := CURRENT_TIMESTAMP();
-    ALTER GIT REPOSITORY orchestration.git_repo_stage_world_triathlon FETCH;
+    ALTER GIT REPOSITORY governance.git_repo_stage_world_triathlon FETCH;
     SYSTEM$LOG('INFO', 'Git repo fetched in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
 
     -- 2) events.sql
     last_ts := CURRENT_TIMESTAMP();
-    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/staging/events.sql;
+    EXECUTE IMMEDIATE FROM @governance.git_repo_stage_world_triathlon/branches/main/src/dml/staging/events.sql;
     SYSTEM$LOG('INFO','events.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
 
     -- 3) programs.sql
     last_ts := CURRENT_TIMESTAMP();
-    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs.sql;
+    EXECUTE IMMEDIATE FROM @governance.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs.sql;
     SYSTEM$LOG('INFO','programs.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
 
     -- 4) programs_results.sql
     last_ts := CURRENT_TIMESTAMP();
-    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs_results.sql;
+    EXECUTE IMMEDIATE FROM @governance.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs_results.sql;
     SYSTEM$LOG('INFO','programs_results.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
 
     -- 5) programs_entries.sql
     last_ts := CURRENT_TIMESTAMP();
-    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs_entries.sql;
+    EXECUTE IMMEDIATE FROM @governance.git_repo_stage_world_triathlon/branches/main/src/dml/staging/programs_entries.sql;
     SYSTEM$LOG('INFO','programs_entries.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
 
     -- 6) ranking.sql
     last_ts := CURRENT_TIMESTAMP();
-    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/staging/ranking.sql;
+    EXECUTE IMMEDIATE FROM @governance.git_repo_stage_world_triathlon/branches/main/src/dml/staging/ranking.sql;
     SYSTEM$LOG('INFO','ranking.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
 
     -- 7) ranking_details.sql
     last_ts := CURRENT_TIMESTAMP();
-    EXECUTE IMMEDIATE FROM @orchestration.git_repo_stage_world_triathlon/branches/main/src/dml/staging/ranking_details.sql;
+    EXECUTE IMMEDIATE FROM @governance.git_repo_stage_world_triathlon/branches/main/src/dml/staging/ranking_details.sql;
     SYSTEM$LOG('INFO','ranking_details.sql executed in ' || DATEDIFF('second', last_ts, CURRENT_TIMESTAMP()) || ' seconds');
 
     -- Total end

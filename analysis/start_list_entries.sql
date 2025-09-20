@@ -10,11 +10,11 @@ INNER JOIN datamart.dim_program p ON p.event_id = pe.event_id AND p.prog_id = pe
 
 WITH entries AS (
     SELECT 
-        pe.event_id,
-        pe.prog_id,
-        f.value:athlete_id::NUMBER AS athlete_id
-    FROM staging.programs_entries pe,
-    LATERAL FLATTEN (INPUT => pe.entries) f
+        sl.event_id,
+        sl.prog_id,
+        sl.event_title,
+        athlete_id
+    FROM datamart.fct_start_list sl
 ),
 race_of_interest AS (
     SELECT
@@ -29,8 +29,7 @@ race_of_interest AS (
     LEFT JOIN datamart.dim_event e ON e.event_id = entries.event_id
     LEFT JOIN datamart.dim_athlete a ON a.athlete_id = entries.athlete_id
     LEFT JOIN datamart.dim_program p ON p.prog_id = entries.prog_id
-    WHERE entries.event_id = 194255
-    AND entries.prog_id = 673838
+    WHERE entries.prog_id = 674137
     AND a.athlete_yob < 2007
 )
 
@@ -47,7 +46,7 @@ SELECT
     MAX(FINISH_POSITION) AS WORST_RESULT,
     COUNT(PROG_DATE) AS NB_RACES,
     OBJECT_AGG(cc.event_title, r.finish_position)
-FROM DATAMART.FCT_RESULTS R
+FROM datamart.fct_results r
 INNER JOIN datamart.dim_event_continental_cup cc ON r.event_id = cc.event_id
 AND cc.event_region_name = 'Europe'
 INNER JOIN DATAMART.DIM_ATHLETE A ON A.ATHLETE_ID = R.ATHLETE_ID

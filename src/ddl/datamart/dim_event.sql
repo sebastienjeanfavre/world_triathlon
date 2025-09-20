@@ -14,11 +14,14 @@ SELECT
     event_region_name,
     event_latitude,
     event_longitude,
-    event_categories,
-    event_specifications,
+    ARRAY_AGG(cats.value:cat_name::VARCHAR) AS event_cat_list,
+    ARRAY_AGG(specs.value:cat_name::VARCHAR) AS event_spec_list,
     triathlonlive,
     load_ts
-FROM staging.events
+FROM staging.events,
+LATERAL FLATTEN(input => event_categories) cats,
+LATERAL FLATTEN(input => event_specifications) specs,
+GROUP BY ALL
 ;
 
 -- ALTER DYNAMIC TABLE datamart.dim_event REFRESH;

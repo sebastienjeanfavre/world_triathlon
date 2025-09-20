@@ -14,16 +14,16 @@ Raw Data → Staging Layer → Datamart Layer → Analytics
 ```
 
 - **Staging**: Raw data ingestion and initial processing
-- **Datamart**: Dimensional model with facts and dimensions
+- **Datamart**: Dimensional model with dynamic tables for automated refresh
 - **Analytics**: Business intelligence queries and reports
 
 ### Database Schema
 
-**Dimensional Model:**
+**Dynamic Tables (6-hour refresh):**
 - `dim_athlete` - Athlete demographics and categories
 - `dim_event` - Competition events and specifications
-- `dim_program` - Race programs and categories
-- `fct_results` - Race results with split times and rankings
+- `dim_program` - Race programs and categories with swim/bike/run breakdowns
+- `fct_results` - Race results with split times, rankings, and leader analysis
 - `fct_ranking` - World Triathlon official rankings
 
 ## Project Structure
@@ -32,10 +32,9 @@ Raw Data → Staging Layer → Datamart Layer → Analytics
 world_triathlon/
 ├── src/                    # Core database objects
 │   ├── ddl/               # Data Definition Language
-│   │   ├── datamart/      # Final analytical tables
+│   │   ├── datamart/      # Dynamic tables with automated refresh
 │   │   └── staging/       # Raw data tables
-│   ├── dml/               # Data Manipulation Language
-│   │   ├── datamart/      # Data loading scripts
+│   ├── dml/               # Data Manipulation Language (legacy)
 │   │   └── staging/       # Staging data processes
 │   └── tests/             # Test scripts and sample data
 ├── analysis/              # Ad-hoc analytical queries
@@ -73,24 +72,37 @@ world_triathlon/
 ## Deployment
 
 ### Automated Pipeline
-The platform uses Snowflake's native Git integration for automated deployments:
+The platform uses Snowflake Dynamic Tables for automated data refresh:
 
 ```sql
--- Scheduled staging refresh (Tuesdays 1 AM UTC)
-CREATE TASK task_refresh_staging
-SCHEDULE = 'USING CRON 0 1 * * 2 UTC'
-AS CALL staging.sp_refresh_staging();
-
--- Datamart refresh with Git integration
-CALL datamart.sp_refresh_datamart();
+-- Staging refresh (Tuesdays 1 AM UTC)
+CREATE OR ALTER TASK staging.task_refresh_staging
+WAREHOUSE = COMPUTE_WH
+SCHEDULE = 'USING CRON 0 3 * * * UTC'
+AS
+    CALL staging.sp_refresh_staging()
+;
 ```
+
+-- Dynamic tables automatically refresh with a maximum lag of 6 hours
+-- using COMPUTE_WH warehouse
+
+-- Manual refresh if needed:
+ALTER DYNAMIC TABLE datamart.dim_athlete REFRESH;
+ALTER DYNAMIC TABLE datamart.dim_event REFRESH;
+ALTER DYNAMIC TABLE datamart.dim_program REFRESH;
+ALTER DYNAMIC TABLE datamart.fct_results REFRESH;
+ALTER DYNAMIC TABLE datamart.fct_ranking REFRESH;
+
 
 ### Manual Deployment
 1. **Initialize Database**: Run scripts in `init/`
 2. **Create Staging Layer**: Execute `src/ddl/staging/`
-3. **Create Datamart Layer**: Execute `src/ddl/datamart/`
-4. **Load Data**: Run DML scripts in `src/dml/`
-5. **Schedule Tasks**: Deploy tasks
+3. **Create Dynamic Tables**: Execute `src/ddl/datamart/`
+   - Tables automatically refresh every 6 hours
+   - Uses COMPUTE_WH warehouse
+   - Integrated SQL logic from DML scripts
+4. **Schedule Tasks**: Deploy staging refresh tasks
 
 ## Data Sources
 
@@ -102,9 +114,10 @@ The platform processes World Triathlon official data including:
 
 ## Key Features
 
+- **Automated Refresh**: Dynamic tables update every 6 hours
 - **Real-time Analysis**: Live race result processing
 - **Historical Tracking**: Multi-year performance comparisons
-- **Segment Analysis**: Detailed swim/bike/run breakdowns
+- **Segment Analysis**: Detailed swim/bike/run breakdowns with leader analysis
 - **Ranking Integration**: Official World Triathlon rankings
 - **Performance Metrics**: Pace, relative position, and trend analysis
 
@@ -142,7 +155,8 @@ GROUP BY prog_name;
 
 - **Database**: Snowflake Cloud Data Platform
 - **Version Control**: Git with Snowflake Git integration
-- **Orchestration**: Snowflake Tasks and Dynamic Tables
+- **Orchestration**: Snowflake Dynamic Tables (6-hour refresh)
+- **Compute**: COMPUTE_WH warehouse
 - **Analytics**: SQL-based dimensional modeling
 
 ---

@@ -75,7 +75,16 @@ world_triathlon/
 The platform uses Snowflake Dynamic Tables for automated data refresh:
 
 ```sql
--- Dynamic tables automatically refresh every 6 hours
+-- Staging refresh (Tuesdays 1 AM UTC)
+CREATE OR ALTER TASK staging.task_refresh_staging
+WAREHOUSE = COMPUTE_WH
+SCHEDULE = 'USING CRON 0 3 * * * UTC'
+AS
+    CALL staging.sp_refresh_staging()
+;
+```
+
+-- Dynamic tables automatically refresh with a maximum lag of 6 hours
 -- using COMPUTE_WH warehouse
 
 -- Manual refresh if needed:
@@ -85,11 +94,6 @@ ALTER DYNAMIC TABLE datamart.dim_program REFRESH;
 ALTER DYNAMIC TABLE datamart.fct_results REFRESH;
 ALTER DYNAMIC TABLE datamart.fct_ranking REFRESH;
 
--- Staging refresh (Tuesdays 1 AM UTC)
-CREATE TASK task_refresh_staging
-SCHEDULE = 'USING CRON 0 1 * * 2 UTC'
-AS CALL staging.sp_refresh_staging();
-```
 
 ### Manual Deployment
 1. **Initialize Database**: Run scripts in `init/`

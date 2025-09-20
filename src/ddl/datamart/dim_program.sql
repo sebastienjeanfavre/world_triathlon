@@ -60,3 +60,6 @@ FROM staging.programs p
 LEFT JOIN swim s ON s.prog_id = p.prog_id
 LEFT JOIN bike b ON b.prog_id = p.prog_id
 LEFT JOIN run r ON r.prog_id = p.prog_id
+;
+
+-- ALTER DYNAMIC TABLE datamart.dim_program REFRESH;

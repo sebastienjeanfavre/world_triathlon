@@ -19,3 +19,6 @@ SELECT
     triathlonlive,
     load_ts
 FROM staging.events
+;
+
+-- ALTER DYNAMIC TABLE datamart.dim_event REFRESH;

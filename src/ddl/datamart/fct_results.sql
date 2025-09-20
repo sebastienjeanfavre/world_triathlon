@@ -87,3 +87,6 @@ SELECT
     split12345_time_s - leader_time_after_run_s AS time_to_leader_after_run_s
 FROM T1
 LEFT JOIN T2 ON T1.prog_id = T2.prog_id
+;
+
+-- ALTER DYNAMIC TABLE datamart.fct_results REFRESH;

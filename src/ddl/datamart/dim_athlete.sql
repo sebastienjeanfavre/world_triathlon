@@ -17,3 +17,6 @@ SELECT
     updated_at,
     load_ts
 FROM staging.athletes
+;
+
+-- ALTER DYNAMIC TABLE datamart.dim_athlete REFRESH;

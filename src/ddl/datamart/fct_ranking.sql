@@ -23,3 +23,6 @@ SELECT
     rd.load_ts
 FROM staging.ranking r
 JOIN staging.ranking_details rd ON r.ranking_id = rd.ranking_id
+;
+
+-- ALTER DYNAMIC TABLE datamart.fct_ranking REFRESH;

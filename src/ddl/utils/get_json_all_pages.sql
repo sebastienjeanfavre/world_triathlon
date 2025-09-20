@@ -66,12 +66,13 @@ class ApiData:
 $$;
 
 
-SELECT 
-    f.value
-FROM TABLE(get_json('https://api.triathlon.org/v1/athletes/' || '106439' || '/results?elite=true', '0201b661afadf43392e4c7dcaed533fe ')) t,
-LATERAL FLATTEN(input => PARSE_JSON(t.json):data) f
+-- SELECT 
+--     f.value
+-- FROM TABLE(get_json('https://api.triathlon.org/v1/athletes/' || '106439' || '/results?elite=true', '0201b661afadf43392e4c7dcaed533fe ')) t,
+-- LATERAL FLATTEN(input => PARSE_JSON(t.json):data) f
+-- ;
 
-
-SELECT 
-    PARSE_JSON(json)
-FROM TABLE(get_json_all_pages('https://api.triathlon.org/v1/athletes/' || '106439' || '/results?elite=true', '0201b661afadf43392e4c7dcaed533fe '));
+-- SELECT 
+--     PARSE_JSON(json)
+-- FROM TABLE(get_json_all_pages('https://api.triathlon.org/v1/athletes/' || '106439' || '/results?elite=true', '0201b661afadf43392e4c7dcaed533fe '))
+-- ;

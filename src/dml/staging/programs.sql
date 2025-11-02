@@ -15,7 +15,7 @@ SELECT
     PARSE_JSON(json):prog_max_age::NUMBER AS prog_max_age,
     PARSE_JSON(json):prog_min_age::NUMBER AS prog_min_age,
     PARSE_JSON(json):prog_notes::VARCHAR AS prog_notes,
-    PARSE_JSON(json):prog_date_utc::DATE AS prog_date_utc,
+    TRY_TO_DATE(PARSE_JSON(json):prog_date_utc::VARCHAR) AS prog_date_utc,
     PARSE_JSON(json):prog_time_utc::VARCHAR AS prog_time_utc,
     PARSE_JSON(json):prog_timezone_name::VARCHAR AS prog_timezone_name,
     PARSE_JSON(json):prog_timezone_offset::VARCHAR AS prog_timezone_offset,

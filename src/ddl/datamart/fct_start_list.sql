@@ -1,6 +1,6 @@
 CREATE OR REPLACE DYNAMIC TABLE datamart.fct_start_list
 TARGET_LAG = '6 hours'
-WAREHOUSE = COMPUTE_WH
+WAREHOUSE = SWISS_TRIATHLON_WH
 AS
 SELECT 
     pe.event_id,
